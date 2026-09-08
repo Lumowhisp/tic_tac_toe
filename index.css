@@ -1,0 +1,465 @@
+/* ========================================
+   BRUTALIST TIC-TAC-TOE — STYLE MANIFEST
+   No grace. No mercy. Just raw CSS.
+   ======================================== */
+
+/* --- DESIGN TOKENS --- */
+:root {
+  --cream: #FFFDD0;
+  --red: #D90429;
+  --red-dark: #A3031F;
+  --black: #1A1A1A;
+  --border-thick: 6px;
+  --border-cell: 5px;
+  --font-mono: 'Space Mono', 'Courier New', Courier, monospace;
+}
+
+/* --- RESET --- */
+*, *::before, *::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+/* --- BASE --- */
+html {
+  font-size: 16px;
+  scroll-behavior: auto; /* brutalism rejects smooth scroll */
+}
+
+body {
+  font-family: var(--font-mono);
+  background-color: var(--cream);
+  color: var(--red);
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  overflow: hidden;
+  position: relative;
+}
+
+/* Noise texture overlay for brutalist grit */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 9999;
+}
+
+/* --- SCREENS --- */
+.screen {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  max-width: 560px;
+  padding: 2rem;
+}
+
+.screen.active {
+  display: flex;
+}
+
+/* --- MODE SELECT --- */
+.glitch-title {
+  font-size: clamp(3rem, 10vw, 6rem);
+  font-weight: 700;
+  line-height: 0.95;
+  text-align: center;
+  position: relative;
+  margin-bottom: 0.5rem;
+  letter-spacing: -0.03em;
+}
+
+/* Glitch pseudo-elements */
+.glitch-title::before,
+.glitch-title::after {
+  content: attr(data-text);
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+}
+
+.glitch-title::before {
+  color: var(--red);
+  animation: glitch-1 3s infinite linear alternate-reverse;
+  clip-path: inset(0 0 60% 0);
+}
+
+.glitch-title::after {
+  color: var(--red-dark);
+  animation: glitch-2 2.5s infinite linear alternate-reverse;
+  clip-path: inset(40% 0 0 0);
+}
+
+@keyframes glitch-1 {
+  0%, 95% { transform: translate(0); }
+  96% { transform: translate(-4px, 2px); }
+  97% { transform: translate(3px, -1px); }
+  98% { transform: translate(-2px, 3px); }
+  99% { transform: translate(4px, -2px); }
+  100% { transform: translate(0); }
+}
+
+@keyframes glitch-2 {
+  0%, 93% { transform: translate(0); }
+  94% { transform: translate(3px, -2px); }
+  95% { transform: translate(-4px, 1px); }
+  96% { transform: translate(2px, 3px); }
+  97% { transform: translate(-3px, -1px); }
+  100% { transform: translate(0); }
+}
+
+.subtitle {
+  font-size: clamp(0.7rem, 2.5vw, 1rem);
+  font-weight: 400;
+  margin-bottom: 3rem;
+  letter-spacing: 0.15em;
+  text-align: center;
+  border-top: var(--border-thick) solid var(--red);
+  border-bottom: var(--border-thick) solid var(--red);
+  padding: 0.75rem 0;
+  width: 100%;
+}
+
+.mode-buttons {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  width: 100%;
+  max-width: 380px;
+  margin-bottom: 3rem;
+}
+
+.footer-text {
+  font-size: 0.7rem;
+  letter-spacing: 0.3em;
+  opacity: 0.6;
+}
+
+/* --- BUTTONS --- */
+.btn-brutal {
+  font-family: var(--font-mono);
+  font-size: clamp(0.85rem, 2vw, 1.1rem);
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.1em;
+  padding: 1rem 2rem;
+  background: var(--red);
+  color: var(--cream);
+  border: var(--border-thick) solid var(--red);
+  cursor: pointer;
+  position: relative;
+  outline: none;
+  -webkit-tap-highlight-color: transparent;
+}
+
+.btn-brutal:hover,
+.btn-brutal:focus-visible {
+  background: var(--cream);
+  color: var(--red);
+  /* NO transition. Instant. Brutal. */
+}
+
+.btn-brutal:active {
+  transform: translate(3px, 3px);
+}
+
+.btn-brutal--outline {
+  background: transparent;
+  color: var(--red);
+}
+
+.btn-brutal--outline:hover,
+.btn-brutal--outline:focus-visible {
+  background: var(--red);
+  color: var(--cream);
+}
+
+.btn-brutal--small {
+  padding: 0.65rem 1.5rem;
+  font-size: clamp(0.7rem, 1.5vw, 0.85rem);
+}
+
+/* --- GAME SCREEN --- */
+.game-header {
+  text-align: center;
+  margin-bottom: 1rem;
+}
+
+.game-title {
+  font-size: clamp(1.8rem, 6vw, 3rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1;
+}
+
+.mode-label {
+  font-size: clamp(0.65rem, 1.8vw, 0.8rem);
+  letter-spacing: 0.2em;
+  margin-top: 0.25rem;
+  opacity: 0.7;
+}
+
+/* --- STATUS BAR --- */
+.status-bar {
+  width: 100%;
+  max-width: 380px;
+  background: var(--red);
+  color: var(--cream);
+  text-align: center;
+  padding: 0.6rem 1rem;
+  font-size: clamp(0.8rem, 2vw, 1rem);
+  font-weight: 700;
+  letter-spacing: 0.15em;
+  margin-bottom: 0;
+  border: var(--border-thick) solid var(--red);
+}
+
+.status-bar.status--highlight {
+  animation: status-flash 0.4s steps(2) 3;
+}
+
+@keyframes status-flash {
+  0%, 100% { background: var(--red); color: var(--cream); }
+  50% { background: var(--cream); color: var(--red); }
+}
+
+/* --- BOARD --- */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: repeat(3, 1fr);
+  width: min(380px, 85vw);
+  height: min(380px, 85vw);
+  border: var(--border-thick) solid var(--red);
+  position: relative;
+}
+
+.cell {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: clamp(3rem, 12vw, 5.5rem);
+  font-weight: 700;
+  color: var(--red);
+  cursor: pointer;
+  user-select: none;
+  border: var(--border-cell) solid var(--red);
+  position: relative;
+  background: var(--cream);
+  line-height: 1;
+}
+
+.cell:hover:not(.cell--taken) {
+  background: var(--red);
+  color: var(--cream);
+}
+
+.cell--taken {
+  cursor: default;
+}
+
+.cell--x::after {
+  content: 'X';
+  font-size: inherit;
+  font-weight: inherit;
+  animation: stamp 0.1s steps(2);
+}
+
+.cell--o::after {
+  content: 'O';
+  font-size: inherit;
+  font-weight: inherit;
+  animation: stamp 0.1s steps(2);
+}
+
+/* Winning cells flash */
+.cell--win {
+  background: var(--red) !important;
+  color: var(--cream) !important;
+}
+
+.cell--win::after {
+  color: var(--cream);
+  animation: win-throb 0.5s steps(2) infinite;
+}
+
+@keyframes stamp {
+  0% { transform: scale(1.6); }
+  100% { transform: scale(1); }
+}
+
+@keyframes win-throb {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.5; }
+}
+
+/* --- SCORE STRIP --- */
+.score-strip {
+  display: flex;
+  width: 100%;
+  max-width: 380px;
+  margin-top: 0;
+}
+
+.score-block {
+  flex: 1;
+  text-align: center;
+  padding: 0.5rem 0;
+  border: var(--border-thick) solid var(--red);
+  border-top: none;
+  display: flex;
+  flex-direction: column;
+  gap: 0.1rem;
+}
+
+.score-block--draw {
+  border-left: none;
+  border-right: none;
+}
+
+.score-label {
+  font-size: clamp(0.6rem, 1.5vw, 0.75rem);
+  letter-spacing: 0.15em;
+  font-weight: 400;
+}
+
+.score-value {
+  font-size: clamp(1.2rem, 3vw, 1.8rem);
+  font-weight: 700;
+}
+
+/* --- ACTION ROW --- */
+.action-row {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+  width: 100%;
+  max-width: 380px;
+}
+
+.action-row .btn-brutal {
+  flex: 1;
+}
+
+/* --- RESULT OVERLAY --- */
+.result-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(217, 4, 41, 0.92);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  animation: overlay-in 0.15s steps(3);
+}
+
+.result-overlay[hidden] {
+  display: none;
+}
+
+@keyframes overlay-in {
+  0% { opacity: 0; }
+  100% { opacity: 1; }
+}
+
+.result-box {
+  text-align: center;
+  padding: 3rem 2rem;
+  border: var(--border-thick) solid var(--cream);
+  background: var(--red);
+  max-width: 420px;
+  width: 90%;
+}
+
+.result-text {
+  font-size: clamp(2rem, 8vw, 4rem);
+  font-weight: 700;
+  color: var(--cream);
+  margin-bottom: 2rem;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+
+.result-box .btn-brutal {
+  background: var(--cream);
+  color: var(--red);
+  border-color: var(--cream);
+  width: 100%;
+}
+
+.result-box .btn-brutal:hover,
+.result-box .btn-brutal:focus-visible {
+  background: transparent;
+  color: var(--cream);
+  border-color: var(--cream);
+}
+
+/* --- DECORATIVE BRUTALIST LINES --- */
+#app {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+/* Corner marks */
+#app::before {
+  content: '///';
+  position: fixed;
+  top: 1.5rem;
+  left: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--red);
+  opacity: 0.25;
+  letter-spacing: -0.1em;
+}
+
+#app::after {
+  content: '///';
+  position: fixed;
+  bottom: 1.5rem;
+  right: 1.5rem;
+  font-family: var(--font-mono);
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: var(--red);
+  opacity: 0.25;
+  letter-spacing: -0.1em;
+}
+
+/* --- RESPONSIVE --- */
+@media (max-width: 480px) {
+  body {
+    padding: 1rem;
+  }
+  
+  .mode-buttons {
+    max-width: 100%;
+  }
+
+  .board {
+    width: 85vw;
+    height: 85vw;
+  }
+
+  .score-strip,
+  .action-row,
+  .status-bar {
+    max-width: 85vw;
+  }
+}

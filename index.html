@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="A brutalist tic-tac-toe game with PvP and Player vs Computer modes. Raw, unpolished, and unapologetically bold.">
+  <title>BRUTALIST TIC-TAC-TOE</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="index.css">
+</head>
+<body>
+  <div id="app">
+    <!-- MODE SELECT SCREEN -->
+    <section id="mode-select" class="screen active">
+      <h1 id="main-title" class="glitch-title" data-text="TIC-TAC-TOE">TIC-TAC-TOE</h1>
+      <p class="subtitle">NO MERCY. NO BEAUTY. JUST X AND O.</p>
+      <div class="mode-buttons">
+        <button id="btn-pvp" class="btn-brutal" onclick="Game.setMode('pvp')">
+          PLAYER VS PLAYER
+        </button>
+        <button id="btn-pvc" class="btn-brutal btn-brutal--outline" onclick="Game.setMode('pvc')">
+          PLAYER VS MACHINE
+        </button>
+      </div>
+      <p class="footer-text">CLICK. PLAY. DESTROY.</p>
+    </section>
+
+    <!-- GAME SCREEN -->
+    <section id="game-screen" class="screen">
+      <header class="game-header">
+        <h1 id="game-title" class="game-title">TIC-TAC-TOE</h1>
+        <p id="mode-label" class="mode-label"></p>
+      </header>
+
+      <div id="status-bar" class="status-bar">
+        <span id="status-text">X MOVES FIRST</span>
+      </div>
+
+      <div id="board" class="board">
+        <div class="cell" data-index="0" onclick="Game.handleClick(0)"></div>
+        <div class="cell" data-index="1" onclick="Game.handleClick(1)"></div>
+        <div class="cell" data-index="2" onclick="Game.handleClick(2)"></div>
+        <div class="cell" data-index="3" onclick="Game.handleClick(3)"></div>
+        <div class="cell" data-index="4" onclick="Game.handleClick(4)"></div>
+        <div class="cell" data-index="5" onclick="Game.handleClick(5)"></div>
+        <div class="cell" data-index="6" onclick="Game.handleClick(6)"></div>
+        <div class="cell" data-index="7" onclick="Game.handleClick(7)"></div>
+        <div class="cell" data-index="8" onclick="Game.handleClick(8)"></div>
+      </div>
+
+      <div id="win-line" class="win-line" hidden></div>
+
+      <div class="score-strip">
+        <div class="score-block">
+          <span class="score-label">X</span>
+          <span id="score-x" class="score-value">0</span>
+        </div>
+        <div class="score-block score-block--draw">
+          <span class="score-label">DRAW</span>
+          <span id="score-draw" class="score-value">0</span>
+        </div>
+        <div class="score-block">
+          <span class="score-label">O</span>
+          <span id="score-o" class="score-value">0</span>
+        </div>
+      </div>
+
+      <div class="action-row">
+        <button id="btn-restart" class="btn-brutal btn-brutal--small" onclick="Game.restart()">
+          RESTART
+        </button>
+        <button id="btn-back" class="btn-brutal btn-brutal--outline btn-brutal--small" onclick="Game.backToMenu()">
+          QUIT
+        </button>
+      </div>
+    </section>
+
+    <!-- RESULT OVERLAY -->
+    <div id="result-overlay" class="result-overlay" hidden>
+      <div class="result-box">
+        <p id="result-text" class="result-text"></p>
+        <button id="btn-play-again" class="btn-brutal" onclick="Game.restart()">
+          PLAY AGAIN
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <script src="game.js"></script>
+</body>
+</html>
